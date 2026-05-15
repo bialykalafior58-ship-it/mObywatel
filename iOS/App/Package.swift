@@ -8,16 +8,13 @@ let package = Package(
         .iOS(.v16)
     ],
     products: [
-        .iOSApplication(
+        .library(
             name: "Mobywatel",
-            targets: ["App"],
-            bundleIdentifier: "com.twojanazwa.mobywatel",   // ← możesz zmienić
-            displayVersion: "1.0",
-            bundleVersion: "1"
+            targets: ["App"]
         )
     ],
     targets: [
-        .executableTarget(
+        .target(
             name: "App",
             path: "Sources"
         )
