@@ -1,0 +1,25 @@
+workflows:
+  build-mobywatel-ios:
+    name: Build mObywatel iOS
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    environment:
+      xcode: latest
+    scripts:
+      - name: Build
+        script: |
+          cd iOS/App
+          
+          echo "Buduję projekt..."
+          
+          xcodebuild build \
+            -scheme App \
+            -sdk iphoneos \
+            -configuration Release \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            -derivedDataPath ../../build
+    artifacts:
+      - path: "**/*.app"
+      - path: "**/*.ipa"
