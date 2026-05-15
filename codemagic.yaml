@@ -10,7 +10,7 @@ workflows:
         script: |
           cd iOS/App
           
-          echo "Buduję projekt..."
+          echo "🚀 Buduję projekt..."
           
           xcodebuild build \
             -scheme App \
@@ -21,5 +21,6 @@ workflows:
             CODE_SIGN_IDENTITY="" \
             -derivedDataPath ../../build
     artifacts:
-      - path: "**/*.app"
-      - path: "**/*.ipa"
+      - "**/*.app"
+      - "**/*.ipa"
+      - "build/**"
