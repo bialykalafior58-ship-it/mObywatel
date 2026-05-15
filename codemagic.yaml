@@ -1,6 +1,6 @@
 workflows:
-  build-mobywatel-ios:
-    name: Build mObywatel iOS
+  build-designsystem:
+    name: Build Design System
     instance_type: mac_mini_m2
     max_build_duration: 60
     environment:
@@ -8,19 +8,29 @@ workflows:
     scripts:
       - name: Build
         script: |
-          cd iOS/App
+          cd iOS
+          ls -la
           
-          echo "🚀 Buduję projekt..."
-          
-          xcodebuild build \
-            -scheme App \
-            -sdk iphoneos \
-            -configuration Release \
-            CODE_SIGNING_ALLOWED=NO \
-            CODE_SIGNING_REQUIRED=NO \
-            CODE_SIGN_IDENTITY="" \
-            -derivedDataPath ../../build
+          # Jeśli jest .xcodeproj
+          if [ -d "App/App.xcodeproj" ]; then
+            echo "Znaleziono Xcode project"
+            xcodebuild build \
+              -project App/App.xcodeproj \
+              -scheme App \
+              -sdk iphoneos \
+              -configuration Release \
+              CODE_SIGNING_ALLOWED=NO
+          else
+            echo "Brak .xcodeproj - budujemy Package"
+            cd App
+            xcodebuild build \
+              -scheme App \
+              -sdk iphoneos \
+              -configuration Release \
+              CODE_SIGNING_ALLOWED=NO \
+              CODE_SIGNING_REQUIRED=NO
+          fi
     artifacts:
-      - "**/*.app"
-      - "**/*.ipa"
-      - "build/**"
+      - path: "**/*.app"
+      - path: "**/*.ipa"
+      - path: "**/build/**"
