@@ -16,7 +16,7 @@ let package = Package(
     targets: [
         .target(
             name: "App",
-            path: "Sources"
+            path: "../Sources"
         )
     ]
 )
