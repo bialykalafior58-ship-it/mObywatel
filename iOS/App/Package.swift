@@ -9,6 +9,9 @@ let package = Package(
         .library(name: "Mobywatel", targets: ["App"])
     ],
     targets: [
-        .target(name: "App")
+        .target(
+            name: "App",
+            path: "../Sources"
+        )
     ]
 )
