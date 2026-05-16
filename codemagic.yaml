@@ -9,28 +9,21 @@ workflows:
       - name: Build
         script: |
           cd iOS
+          echo "=== Zawartość folderu iOS ==="
           ls -la
           
-          # Jeśli jest .xcodeproj
-          if [ -d "App/App.xcodeproj" ]; then
-            echo "Znaleziono Xcode project"
-            xcodebuild build \
-              -project App/App.xcodeproj \
-              -scheme App \
-              -sdk iphoneos \
-              -configuration Release \
-              CODE_SIGNING_ALLOWED=NO
-          else
-            echo "Brak .xcodeproj - budujemy Package"
-            cd App
-            xcodebuild build \
-              -scheme App \
-              -sdk iphoneos \
-              -configuration Release \
-              CODE_SIGNING_ALLOWED=NO \
-              CODE_SIGNING_REQUIRED=NO
-          fi
+          echo "=== Próbuję budować ==="
+          cd App
+          
+          xcodebuild build \
+            -scheme App \
+            -sdk iphoneos \
+            -configuration Release \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            -derivedDataPath ../../build
     artifacts:
-      - path: "**/*.app"
-      - path: "**/*.ipa"
-      - path: "**/build/**"
+      - "**/*.app"
+      - "**/*.ipa"
+      - "build/**"
