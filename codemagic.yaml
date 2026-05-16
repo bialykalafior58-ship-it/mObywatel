@@ -1,6 +1,6 @@
 workflows:
-  build-last-try:
-    name: Last Brutal Try
+  build-mobywatel:
+    name: Build mObywatel
     instance_type: mac_mini_m2
     max_build_duration: 60
     environment:
@@ -9,10 +9,11 @@ workflows:
       - name: Build
         script: |
           cd iOS
-          echo "=== Zawartość folderu iOS ==="
+          echo "=== Zawartość iOS ==="
           ls -la
           
-          echo "=== Próbuję budować z folderu iOS ==="
+          echo "=== Próbuję budować ==="
+          cd App || cd .
           
           xcodebuild build \
             -scheme App \
@@ -21,7 +22,7 @@ workflows:
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGN_IDENTITY="" \
-            -derivedDataPath ../build || echo "Build się wysypał, ale kontynuujemy..."
+            -derivedDataPath ../../build || echo "Build failed but continuing..."
     artifacts:
       - "**/*.app"
       - "**/*.ipa"
